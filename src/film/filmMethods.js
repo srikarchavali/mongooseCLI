@@ -8,5 +8,17 @@ exports.addMovie = async(newFilm)=>{
         console.log("Movie created");
     } catch (error) {
         console.log(error);
+    } finally{
+        mongoose.connection.close()
+    }
+}
+
+exports.list = async ()=>{
+    try {
+        console.log(await FilmModel.find({}));
+    } catch (error) {
+        console.log(error);
+    }finally{
+        mongoose.connection.close()
     }
 }
