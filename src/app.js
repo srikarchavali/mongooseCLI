@@ -3,9 +3,7 @@ const mongoose = require('mongoose')
 const yargs = require('yargs/yargs');
 const {hideBin} = require('yargs/helpers')
 const argv = yargs(hideBin(process.argv)).argv;
-const {addMovie, list, findOne} = require('./film/filmMethods');
-
-
+const {addMovie, list, findOne, deleteOne, deleteMany, updateOne} = require('./film/filmMethods');
 
 const app = async() => {
     if(argv.add){
@@ -21,7 +19,20 @@ const app = async() => {
             title: argv.title,
             actor: argv.actor
         })
-    }else{
+    }else if(argv.deleteone){
+        await deleteOne({
+            title: argv.title,
+            actor: argv.actor
+        })
+    }else if(argv.deletemany){
+        await deleteMany({
+            title: argv.title,
+            actor: argv.actor
+        })
+    }else if(argv.updateone){
+        await updateOne(argv)
+    }    
+    else{
         console.log("wrong command");
     }
     mongoose.connection.close()
